@@ -1,9 +1,7 @@
-package app;// Main.java
+package app;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Main {
     public static void main(String[] args) {
@@ -14,12 +12,9 @@ public class Main {
                 new Product("Blender", "Appliances", 50.0)
         );
 
-        Map<String, Double> result = products.stream()
-                .collect(Collectors.groupingBy(Product::getCategory, Collectors.averagingDouble(Product::getPrice)));
+        ProductGrouper grouper = new ProductGrouper(products);
 
-        System.out.println("Результат: " + result.entrySet()
-                .stream()
-                .max(Map.Entry.comparingByValue())
-                .orElseThrow());
+        System.out.printf("Результат групування: %s%n", grouper.getAveragePricesGroupedByCategories());
+        System.out.printf("Категорія з найбільшим average price: %s%n", grouper.getGroupWithMaxAveragePrice());
     }
 }
